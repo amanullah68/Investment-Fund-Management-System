@@ -1,0 +1,38 @@
+{
+  "name": "investment-fund-management-system",
+  "version": "1.0.0",
+  "description": "A backend service to manage investments in a fund through a smart contract. The system will handle basic investment and redemption operations, tracking the fund's value and investor positions.",
+  "main": "dist/app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --exec 'node --loader ts-node/esm -r dotenv/config src/app.ts'",
+    "start": "node --loader ts-node/esm -r dotenv/config src/app.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.8",
+    "@types/pg": "^8.11.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@types/ioredis": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "ethers": "^6.13.5",
+    "express": "^5.0.1",
+    "express-validator": "^7.2.1",
+    "ioredis": "^5.5.0",
+    "nodemon": "^3.1.9",
+    "pg": "^8.13.3",
+    "pgtools": "^1.0.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20",
+    "zod": "^3.24.2"
+  }
+}
