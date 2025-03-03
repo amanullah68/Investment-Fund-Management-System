@@ -9,7 +9,7 @@ export const httpLogger = morgan((tokens, req, res) => {
     tokens.url(req, res),
     tokens.status(req, res),
     `${tokens["response-time"](req, res)}ms`,
-    `- ${tokens.res(req, res, "content-length") || 0}b`
+    `- ${tokens.res(req, res, "content-length") || 0}b`,
   ].join(" ");
 
   logger.info(message, {
@@ -17,7 +17,7 @@ export const httpLogger = morgan((tokens, req, res) => {
     url: tokens.url(req, res),
     status: tokens.status(req, res),
     responseTime: tokens["response-time"](req, res),
-    contentLength: tokens.res(req, res, "content-length")
+    contentLength: tokens.res(req, res, "content-length"),
   });
 
   return message;

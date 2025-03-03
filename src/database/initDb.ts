@@ -25,7 +25,9 @@ export async function createDatabaseIfNotExist(): Promise<void> {
     if (err.name === "duplicate_database" || (err as any).code === "42P04") {
       logger.info(`Database already exists`, { database: env.POSTGRES_DB });
     } else {
-      logger.error(`Database creation failed`, err, { database: env.POSTGRES_DB });
+      logger.error(`Database creation failed`, err, {
+        database: env.POSTGRES_DB,
+      });
     }
   }
 }
@@ -46,7 +48,7 @@ export async function connectDatabaseWithRetry() {
     } catch (error) {
       retryCount++;
       const err = error instanceof Error ? error : new Error(String(error));
-      
+
       logger.error("Connection attempt failed", err, {
         attempt: `${retryCount}/${MAX_RETRIES}`,
       });
@@ -59,7 +61,9 @@ export async function connectDatabaseWithRetry() {
   }
 
   const finalError = new Error("Maximum connection retries exceeded");
-  logger.error("Database connection failed", finalError, { maxRetries: MAX_RETRIES });
+  logger.error("Database connection failed", finalError, {
+    maxRetries: MAX_RETRIES,
+  });
   throw finalError;
 }
 

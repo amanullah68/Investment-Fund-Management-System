@@ -1,4 +1,3 @@
-// src/services/blockchain/contract-events.ts
 import { ethers } from "ethers";
 import { AppDataSource } from "../../database/dataSource.js";
 import { env } from "../../config/config.js";
@@ -21,7 +20,7 @@ export function listenToContractEvents() {
 
     logger.info("Initializing contract event listeners", {
       contractAddress: env.CONTRACT_ADDRESS,
-      rpcUrl: env.RPC_URL
+      rpcUrl: env.RPC_URL,
     });
 
     // Investment event listener
@@ -38,8 +37,9 @@ export function listenToContractEvents() {
         const block = await event.getBlock();
 
         try {
-          const investorTransactionRepo = AppDataSource.getRepository(InvestorTransaction);
-          
+          const investorTransactionRepo =
+            AppDataSource.getRepository(InvestorTransaction);
+
           const investment = investorTransactionRepo.create({
             transaction_hash: txHash,
             investor_address: investor,
@@ -54,12 +54,12 @@ export function listenToContractEvents() {
           logger.info("Investment event processed successfully", {
             txHash,
             investor,
-            amount: ethers.formatUnits(usdAmount, 6)
+            amount: ethers.formatUnits(usdAmount, 6),
           });
         } catch (error) {
           logger.error("Error saving Investment event", error as Error, {
             txHash,
-            investor
+            investor,
           });
         }
       }
@@ -79,7 +79,8 @@ export function listenToContractEvents() {
         const block = await event.getBlock();
 
         try {
-          const investorTransactionRepo = AppDataSource.getRepository(InvestorTransaction);
+          const investorTransactionRepo =
+            AppDataSource.getRepository(InvestorTransaction);
 
           const redemption = investorTransactionRepo.create({
             transaction_hash: txHash,
@@ -95,12 +96,12 @@ export function listenToContractEvents() {
           logger.info("Redemption event processed successfully", {
             txHash,
             investor,
-            shares: shares.toString()
+            shares: shares.toString(),
           });
         } catch (error) {
           logger.error("Error saving Redemption event", error as Error, {
             txHash,
-            investor
+            investor,
           });
         }
       }
@@ -132,16 +133,15 @@ export function listenToContractEvents() {
           await fundMetricRepo.save(metrics);
           logger.info("MetricsUpdated event processed successfully", {
             txHash,
-            totalAssets: ethers.formatUnits(totalAssetValue, 6)
+            totalAssets: ethers.formatUnits(totalAssetValue, 6),
           });
         } catch (error) {
           logger.error("Error saving MetricsUpdated event", error as Error, {
-            txHash
+            txHash,
           });
         }
       }
     );
-
   } catch (error) {
     logger.error("Failed to initialize contract listeners", error as Error);
     throw error;

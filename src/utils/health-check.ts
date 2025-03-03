@@ -30,9 +30,9 @@ class HealthService {
     try {
       await Promise.race([
         this.rpcProvider.getBlockNumber(),
-        new Promise((_, reject) => 
+        new Promise((_, reject) =>
           setTimeout(() => reject(new Error("RPC timeout")), RPC_TIMEOUT)
-        )
+        ),
       ]);
       return true;
     } catch (error) {
@@ -45,7 +45,7 @@ class HealthService {
     const [postgres, redis, rpc] = await Promise.all([
       this.checkPostgres(),
       this.checkRedis(),
-      this.checkRpc()
+      this.checkRpc(),
     ]);
 
     return {
@@ -53,10 +53,10 @@ class HealthService {
       services: {
         postgres,
         redis,
-        rpc
+        rpc,
       },
       timestamp: Date.now(),
-      uptime: process.uptime()
+      uptime: process.uptime(),
     };
   }
 }

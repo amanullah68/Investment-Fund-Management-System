@@ -21,30 +21,37 @@ export class FundService {
   }
 
   async processRedemption(investor: string, shares: bigint) {
-    this.logger.info("Processing redemption", { investor, shares: shares.toString() });
+    this.logger.info("Processing redemption", {
+      investor,
+      shares: shares.toString(),
+    });
     return this.blockchain.redeem(investor, shares);
   }
 
   async getBalance(investorAddress: string): Promise<string> {
     try {
-      validateAddress(investorAddress);
       const address = sanitizeAddress(investorAddress);
       this.logger.debug("Fetching balance", { address });
 
       const balance = (await this.blockchain.getBalance(address)).toString();
       this.logger.info("Balance retrieved", { address, balance });
-      
+
       return balance;
     } catch (error) {
-      this.logger.error("Balance check failed", error as Error, { investorAddress });
+      this.logger.error("Balance check failed", error as Error, {
+        investorAddress,
+      });
       throw error;
     }
   }
 
   public getCacheStatus(): "fresh" | "stale" {
-    const status = this.localCache && Date.now() - this.localCache.timestamp < parseInt(env.METRICS_CACHE_TTL) * 1000 
-      ? "fresh" 
-      : "stale";
+    const status =
+      this.localCache &&
+      Date.now() - this.localCache.timestamp <
+        parseInt(env.METRICS_CACHE_TTL) * 1000
+        ? "fresh"
+        : "stale";
     this.logger.debug("Cache status checked", { status });
     return status;
   }
@@ -58,21 +65,23 @@ export class FundService {
       try {
         const cached = await redis.getJSON<CachedMetrics>(CACHE_KEY);
         if (cached && now - cached.timestamp < ttl * 1000) {
-          this.logger.info("Cache hit - Using Redis metrics", { 
+          this.logger.info("Cache hit - Using Redis metrics", {
             age: now - cached.timestamp,
-            ttl 
+            ttl,
           });
           return cached.data;
         }
       } catch (error) {
-        this.logger.error("Redis cache check failed", error as Error, { CACHE_KEY });
+        this.logger.error("Redis cache check failed", error as Error, {
+          CACHE_KEY,
+        });
       }
     }
 
     if (this.localCache && now - this.localCache.timestamp < ttl * 1000) {
-      this.logger.info("Cache hit - Using local metrics", { 
+      this.logger.info("Cache hit - Using local metrics", {
         age: now - this.localCache.timestamp,
-        ttl 
+        ttl,
       });
       return this.localCache.data;
     }
@@ -86,7 +95,9 @@ export class FundService {
         await redis.setJSON(CACHE_KEY, cacheData, ttl);
         this.logger.info("Updated Redis cache", { CACHE_KEY, ttl });
       } catch (error) {
-        this.logger.error("Redis cache update failed", error as Error, { CACHE_KEY });
+        this.logger.error("Redis cache update failed", error as Error, {
+          CACHE_KEY,
+        });
       }
 
       this.localCache = cacheData;
@@ -95,13 +106,16 @@ export class FundService {
       return freshMetrics;
     } catch (error) {
       if (this.localCache) {
-        this.logger.warn("Falling back to stale metrics", { 
+        this.logger.warn("Falling back to stale metrics", {
           error: error as Error,
-          staleAge: now - this.localCache.timestamp 
+          staleAge: now - this.localCache.timestamp,
         });
         return this.localCache.data;
       }
-      this.logger.error("Metrics fetch failed with no stale data available", error as Error);
+      this.logger.error(
+        "Metrics fetch failed with no stale data available",
+        error as Error
+      );
       throw error;
     }
   }

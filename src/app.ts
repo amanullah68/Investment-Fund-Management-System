@@ -1,4 +1,3 @@
-// src/app.ts
 import "dotenv/config";
 import express from "express";
 import { fundRouter } from "./modules/fund/fund.routes.js";
@@ -19,11 +18,13 @@ import { env } from "./config/config.js";
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-  origin: [env.CLIENT_URL],
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+app.use(
+  cors({
+    origin: [env.CLIENT_URL],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 const logger = new Logger("HealthCheck"); // Create logger instance
 

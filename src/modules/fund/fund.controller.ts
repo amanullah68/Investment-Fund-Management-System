@@ -136,7 +136,7 @@ export class FundController {
       });
     } catch (error) {
       this.logger.error("Metrics fetch failed", error as Error, { refresh });
-  
+
       const statusCode = error instanceof HttpError ? error.statusCode : 503;
       handleResponse(
         this.logger,

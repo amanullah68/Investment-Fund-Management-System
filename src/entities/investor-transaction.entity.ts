@@ -1,6 +1,6 @@
 import { Entity, Column } from "typeorm";
 import { BaseEntity } from "./base.entity.js";
-import {TransactionType} from "../types/transaction.type.js";
+import { TransactionType } from "../types/transaction.type.js";
 
 @Entity({ name: "investor_transactions" })
 export class InvestorTransaction extends BaseEntity {

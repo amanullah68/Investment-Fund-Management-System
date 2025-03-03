@@ -1,4 +1,3 @@
-// src/entities/base.entity.ts
 import { PrimaryColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 export abstract class BaseEntity {

@@ -1,4 +1,3 @@
-// src/utils/logger.ts
 import winston from "winston";
 import { env } from "../config/config.js";
 import { existsSync, mkdirSync } from "fs";
@@ -23,24 +22,26 @@ const logger = winston.createLogger({
       filename: join(logDir, "error.log"),
       level: "error",
       maxsize: 5 * 1024 * 1024, // 5MB
-      maxFiles: 7
+      maxFiles: 7,
     }),
     new winston.transports.File({
       filename: join(logDir, "combined.log"),
       maxsize: 10 * 1024 * 1024, // 10MB
-      maxFiles: 14
-    })
-  ]
+      maxFiles: 14,
+    }),
+  ],
 });
 
 // Add console transport in non-production environments
 if (env.NODE_ENV !== "production") {
-  logger.add(new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple()
-    )
-  }));
+  logger.add(
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      ),
+    })
+  );
 }
 
 // Custom logger interface
@@ -64,14 +65,14 @@ export class Logger {
   }
 
   error(message: string, error: Error, meta?: object) {
-    logger.error(message, { 
+    logger.error(message, {
       ...meta,
       context: this.context,
       error: {
         name: error.name,
         message: error.message,
-        stack: error.stack
-      }
+        stack: error.stack,
+      },
     });
   }
 }

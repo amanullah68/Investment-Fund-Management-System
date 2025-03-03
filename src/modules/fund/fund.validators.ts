@@ -22,7 +22,7 @@ const sharesValidator = (value: string) => {
   }
 };
 
-const addressValidator = (address: string) => {
+export const addressValidator = (address: string) => {
   try {
     return sanitizeAddress(address);
   } catch (error) {
@@ -31,12 +31,10 @@ const addressValidator = (address: string) => {
     logger.error(httpError.message, httpError, { inputValue: address });
     throw httpError;
   }
-}
+};
 
 export const investValidation = [
-  body("investor")
-    .trim()
-    .custom(addressValidator),
+  body("investor").trim().custom(addressValidator),
   body("usdAmount")
     .isFloat({ min: 0.000001 })
     .withMessage("Minimum investment: 0.000001")
@@ -52,8 +50,6 @@ export const investValidation = [
 ];
 
 export const redeemValidation = [
-  body("investor")
-    .trim()
-    .custom(addressValidator),
+  body("investor").trim().custom(addressValidator),
   body("shares").isInt().custom(sharesValidator),
 ];
