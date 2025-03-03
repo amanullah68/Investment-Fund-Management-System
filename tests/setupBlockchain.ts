@@ -1,4 +1,3 @@
-// setupBlockchain.ts
 import ganache from "ganache";
 
 let ganacheServer: any;

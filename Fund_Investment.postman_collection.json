@@ -1,0 +1,1195 @@
+{
+	"info": {
+		"_postman_id": "4beedde7-b53d-4df1-9386-f8b609ddfbc4",
+		"name": "Fund Investment",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7277702"
+	},
+	"item": [
+		{
+			"name": "Health check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "174"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"ae-ry75ybGJ3yciW6s46PUFFfOfXHw\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 12:58:15 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Service health status\",\n    \"data\": {\n        \"status\": \"OK\",\n        \"services\": {\n            \"postgres\": true,\n            \"redis\": true,\n            \"rpc\": true\n        },\n        \"timestamp\": 1741006695038,\n        \"uptime\": 29.431174763\n    }\n}"
+				},
+				{
+					"name": "Postgres Down",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"status": "Service Unavailable",
+					"code": 503,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "182"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b6-vF28xU7r+O/Ka1gKNDmX+pyA+e4\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 12:59:10 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Service health status\",\n    \"data\": {\n        \"status\": \"DEGRADED\",\n        \"services\": {\n            \"postgres\": false,\n            \"redis\": true,\n            \"rpc\": true\n        },\n        \"timestamp\": 1741006750043,\n        \"uptime\": 84.434769594\n    }\n}"
+				},
+				{
+					"name": "Redis Down",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"status": "Service Unavailable",
+					"code": 503,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "183"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b7-klsIBDGR8K6BQ8P1XUvdf9b4bAo\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 13:00:23 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Service health status\",\n    \"data\": {\n        \"status\": \"DEGRADED\",\n        \"services\": {\n            \"postgres\": true,\n            \"redis\": false,\n            \"rpc\": true\n        },\n        \"timestamp\": 1741006823418,\n        \"uptime\": 157.807442043\n    }\n}"
+				},
+				{
+					"name": "RPC Down",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"status": "Service Unavailable",
+					"code": 503,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "183"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b7-fM7eZVEWbtT6UFsv/hxzKJlF1yU\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 13:01:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Service health status\",\n    \"data\": {\n        \"status\": \"DEGRADED\",\n        \"services\": {\n            \"postgres\": true,\n            \"redis\": true,\n            \"rpc\": false\n        },\n        \"timestamp\": 1741006910840,\n        \"uptime\": 245.227089839\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Investor Balance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/fund/balance/0x11b08dF706A425D7A1b280D953e1576557402149",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"fund",
+						"balance",
+						"0x11b08dF706A425D7A1b280D953e1576557402149"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/fund/balance/0x11b08dF706A425D7A1b280D953e1576557402149",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"balance",
+								"0x11b08dF706A425D7A1b280D953e1576557402149"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "132"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"84-ZO/mx2soYau0xPOiIhqFSwbAQSE\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 10:52:33 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Balance retrieved\",\n    \"data\": {\n        \"address\": \"0x11b08dF706A425D7A1b280D953e1576557402149\",\n        \"balance\": \"235000000\"\n    }\n}"
+				},
+				{
+					"name": "Invalid Address",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/fund/balance/0x11b08dF706A425D7A1b280D953e157652149",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"balance",
+								"0x11b08dF706A425D7A1b280D953e157652149"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "252"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"fc-09pf7TZx+HLRHIuOnW0rteVy6tI\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 16:06:03 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Invalid request parameters\",\n    \"data\": {\n        \"errors\": [\n            {\n                \"type\": \"field\",\n                \"value\": \"0x11b08dF706A425D7A1b280D953e157652149\",\n                \"msg\": \"Invalid Ethereum address: 0x11b08dF706A425D7A1b280D953e157652149\",\n                \"path\": \"address\",\n                \"location\": \"params\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Fund Metrics",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/fund/fundMetrics",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"fund",
+						"fundMetrics"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/fund/fundMetrics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"fundMetrics"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "178"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b2-Wr7yNHvPqy7XPovP6TidHhWZHaw\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 10:53:44 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Metrics retrieved\",\n    \"data\": {\n        \"totalAssetValue\": \"235000000\",\n        \"sharesSupply\": \"235000000\",\n        \"lastUpdateTime\": \"2025-03-03T01:37:00.000Z\",\n        \"cacheStatus\": \"fresh\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Redeem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D953e1576557402149\",\n    \"shares\": 5000000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/fund/redeem",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"fund",
+						"redeem"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D953e1576557402149\",\n    \"shares\": 2000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/fund/redeem",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"redeem"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "155"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"9b-djnwGJ0WtXMUROsWo/REC60QdWw\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 12:24:28 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Redemption processed\",\n    \"data\": {\n        \"status\": \"success\",\n        \"txHash\": \"0x9f29a7c788c9dcd67994d7ef875c331248500461f504f177082e198d975582e4\"\n    }\n}"
+				},
+				{
+					"name": "Invalid Ethereum Address",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D953e157402149\",\n    \"shares\": 5000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/fund/redeem",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"redeem"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "251"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"fb-hLC+m8tgPBxMVrxlohv6lm7e/2w\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 11:56:17 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Invalid request parameters\",\n    \"data\": {\n        \"errors\": [\n            {\n                \"type\": \"field\",\n                \"value\": \"0x11b08dF706A425D7A1b280D953e157402149\",\n                \"msg\": \"Invalid Ethereum address: 0x11b08dF706A425D7A1b280D953e157402149\",\n                \"path\": \"investor\",\n                \"location\": \"body\"\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Negative Share Value",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D953e1576557402149\",\n    \"shares\": -5000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/fund/redeem",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"redeem"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "174"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"ae-z1ICW5kvWc7TGHrrN76u4hjwS9w\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 11:58:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Invalid request parameters\",\n    \"data\": {\n        \"errors\": [\n            {\n                \"type\": \"field\",\n                \"value\": -5000000,\n                \"msg\": \"Invalid shares format\",\n                \"path\": \"shares\",\n                \"location\": \"body\"\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Insufficient Balance",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"investor\": \"0x21beCFfE0a53263Bc1c3fdF2Eaf1762311f9F090\",\n    \"shares\": 5000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/fund/redeem",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"redeem"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "82"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"52-3wHYtaeefbDFzdT1uWK38R5rz1A\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 11:59:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Insufficient balance: 0 shares available\",\n    \"data\": null\n}"
+				},
+				{
+					"name": "Invalid shares format",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D953e1576557402149\",\n    \"shares\": 5000000.123123123123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/fund/redeem",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"redeem"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "282"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"11a-iIAgMKuQUhpcSFqO2qtx3gN8IGw\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 11:59:39 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Invalid request parameters\",\n    \"data\": {\n        \"errors\": [\n            {\n                \"type\": \"field\",\n                \"value\": 5000000.123123123,\n                \"msg\": \"Invalid value\",\n                \"path\": \"shares\",\n                \"location\": \"body\"\n            },\n            {\n                \"type\": \"field\",\n                \"value\": 5000000.123123123,\n                \"msg\": \"Invalid shares format\",\n                \"path\": \"shares\",\n                \"location\": \"body\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Invest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D953e1576557402149\",\n    \"usdAmount\": 90\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/fund/invest",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"fund",
+						"invest"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D953e1576557402149\",\n    \"usdAmount\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/fund/invest",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"invest"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "155"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"9b-fwENm0nIb6PApwFl1ha2rbhP4c4\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 12:18:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Investment processed\",\n    \"data\": {\n        \"status\": \"success\",\n        \"txHash\": \"0x4ed4074219f7dae0441540ca5a05b49b818a9e372e74b803db404c19da248b41\"\n    }\n}"
+				},
+				{
+					"name": "Invalid Investor Address",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D95376557402149\",\n    \"usdAmount\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/fund/invest",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"invest"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "253"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"fd-8+7nYjfXSV3SH0bFr3lP4i7fgOg\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 12:26:09 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Invalid request parameters\",\n    \"data\": {\n        \"errors\": [\n            {\n                \"type\": \"field\",\n                \"value\": \"0x11b08dF706A425D7A1b280D95376557402149\",\n                \"msg\": \"Invalid Ethereum address: 0x11b08dF706A425D7A1b280D95376557402149\",\n                \"path\": \"investor\",\n                \"location\": \"body\"\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Negative USD amount",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D953e1576557402149\",\n    \"usdAmount\": -10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/fund/invest",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"invest"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "179"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b3-tp/EHsxig55xmVDqRBSP/qwhKNQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 12:26:36 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Invalid request parameters\",\n    \"data\": {\n        \"errors\": [\n            {\n                \"type\": \"field\",\n                \"value\": -10,\n                \"msg\": \"Minimum investment: 0.000001\",\n                \"path\": \"usdAmount\",\n                \"location\": \"body\"\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Excessive USD decimal",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"investor\": \"0x11b08dF706A425D7A1b280D953e1576557402149\",\n    \"usdAmount\": 10.123123123123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/fund/invest",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"fund",
+								"invest"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "185"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b9-2CxVe+KjyCOMboGgHfAEl+K80iY\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 03 Mar 2025 12:26:59 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"message\": \"Invalid request parameters\",\n    \"data\": {\n        \"errors\": [\n            {\n                \"type\": \"field\",\n                \"value\": 10.123123123123,\n                \"msg\": \"Excessive USD decimals\",\n                \"path\": \"usdAmount\",\n                \"location\": \"body\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
