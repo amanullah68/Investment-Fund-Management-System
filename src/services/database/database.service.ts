@@ -1,7 +1,6 @@
-// src/database/database.service.ts
-import { AppDataSource } from "../../database/data-source.js";
-import { InvestorTransaction } from "../../entities/InvestorTransaction.js";
-import { FundMetric } from "../../entities/FundMetric.js";
+import { AppDataSource } from "../../database/dataSource.js";
+import { InvestorTransaction } from "../../entities/investor-transaction.entity.js";
+import { FundMetric } from "../../entities/fund-metric.entity.js";
 import { BaseEntity } from "typeorm";
 
 export class DatabaseService {

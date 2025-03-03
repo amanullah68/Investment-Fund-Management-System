@@ -1,95 +1,150 @@
-// fund.controller.ts (updated)
 import { Request, Response } from "express";
 import { FundService } from "./fund.service.js";
 import { sanitizeAddress } from "../../utils/address.js";
+import { Logger } from "../../utils/logger.js";
+import { HttpError } from "../../errors/http.error.js";
+import { handleResponse } from "../../utils/response.util.js";
 
 export class FundController {
   private service = new FundService();
-
-  private handleResponse(
-    res: Response,
-    success: boolean,
-    message: string,
-    data?: any,
-    statusCode = success ? 200 : 500
-  ): Response {
-    return res.status(statusCode).json({
-      success,
-      message,
-      data: typeof data === "bigint" ? data.toString() : data,
-    });
-  }
+  private logger = new Logger("FundController");
 
   // Investment handler
   invest = async (req: Request, res: Response) => {
+    const { investor, usdAmount } = req.body;
     try {
-      const result = await this.service.processInvestment(
-        req.body.investor,
-        req.body.usdAmount
-      );
-      this.handleResponse(res, true, "Investment processed", result);
+      this.logger.info("Processing investment request", {
+        investor,
+        usdAmount,
+      });
+
+      const result = await this.service.processInvestment(investor, usdAmount);
+
+      this.logger.info("Investment processed successfully", {
+        investor,
+        usdAmount,
+        result: result,
+      });
+
+      handleResponse(this.logger, res, true, "Investment processed", result);
     } catch (error) {
-      this.handleResponse(
+      this.logger.error("Investment processing failed", error as Error, {
+        investor,
+        usdAmount,
+      });
+
+      const statusCode = error instanceof HttpError ? error.statusCode : 500;
+      handleResponse(
+        this.logger,
         res,
         false,
-        error instanceof Error ? error.message : "Investment failed"
+        error instanceof Error ? error.message : "Investment failed",
+        null,
+        statusCode
       );
     }
   };
 
   // Redemption handler
   redeem = async (req: Request, res: Response) => {
+    const { investor, shares } = req.body;
     try {
-      const result = await this.service.processRedemption(
-        req.body.investor,
-        req.body.shares
-      );
-      this.handleResponse(res, true, "Redemption processed", result);
+      this.logger.info("Processing redemption request", {
+        investor,
+        shares,
+      });
+
+      const result = await this.service.processRedemption(investor, shares);
+
+      this.logger.info("Redemption processed successfully", {
+        investor,
+        shares,
+        result,
+      });
+
+      handleResponse(this.logger, res, true, "Redemption processed", result);
     } catch (error) {
-      this.handleResponse(
+      const statusCode = error instanceof HttpError ? error.statusCode : 500;
+      const message =
+        error instanceof Error ? error.message : "Redemption failed";
+
+      this.logger.error("Redemption processing failed", error as Error, {
+        investor,
+        shares,
+        statusCode,
+      });
+
+      handleResponse(
+        this.logger,
         res,
         false,
-        error instanceof Error ? error.message : "Redemption failed"
+        message,
+        null, // No data on error
+        statusCode // Pass the determined status code
       );
     }
   };
 
   // Balance handler
   getBalance = async (req: Request, res: Response) => {
+    const address = req.params.address;
     try {
-      const address = sanitizeAddress(req.params.address);
-      const balance = await this.service.getBalance(address);
-      this.handleResponse(res, true, "Balance retrieved", {
-        address: address,
+      this.logger.info("Fetching balance request received", { address });
+
+      const sanitizedAddress = sanitizeAddress(address);
+      const balance = await this.service.getBalance(sanitizedAddress);
+
+      this.logger.info("Balance retrieved successfully", {
+        address: sanitizedAddress,
+        balance,
+      });
+
+      handleResponse(this.logger, res, true, "Balance retrieved", {
+        address: sanitizedAddress,
         balance,
       });
     } catch (error) {
-      this.handleResponse(
+      this.logger.error("Balance check failed", error as Error, { address });
+      const statusCode = error instanceof HttpError ? error.statusCode : 500;
+      handleResponse(
+        this.logger,
         res,
         false,
-        error instanceof Error ? error.message : "Balance check failed"
+        error instanceof Error ? error.message : "Balance check failed",
+        null,
+        statusCode
       );
     }
   };
 
   // Metrics handler
-  // src/modules/fund/fund.controller.ts
   getMetrics = async (req: Request, res: Response) => {
+    const refresh = req.query.refresh === "true";
     try {
-      const refresh = req.query.refresh === "true";
+      this.logger.info("Fetching fund metrics", { refresh });
+
       const metrics = await this.service.getFundMetrics(refresh);
 
-      this.handleResponse(res, true, "Metrics retrieved", {
+      this.logger.info("Metrics retrieved successfully", {
+        refresh,
+        cacheStatus: this.service.getCacheStatus(),
+      });
+
+      handleResponse(this.logger, res, true, "Metrics retrieved", {
         ...metrics,
         cacheStatus: this.service.getCacheStatus(),
       });
     } catch (error) {
-      this.handleResponse(
+      this.logger.error("Metrics fetch failed", error as Error, { refresh });
+  
+      const statusCode = error instanceof HttpError ? error.statusCode : 503;
+      handleResponse(
+        this.logger,
         res,
         false,
         error instanceof Error ? error.message : "Metrics fetch failed",
         null,
-        503
+        statusCode
       );
     }
   };

@@ -1,4 +1,3 @@
-// src/utils/address.ts
 import { ethers } from "ethers";
 
 export const sanitizeAddress = (address: string): string => {

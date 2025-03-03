@@ -2,10 +2,10 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { env } from "../config/config.js";
 import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { dirname } from "path";
 
-import { InvestorTransaction } from "../entities/InvestorTransaction.js";
-import { FundMetric } from "../entities/FundMetric.js";
+import { InvestorTransaction } from "../entities/investor-transaction.entity.js";
+import { FundMetric } from "../entities/fund-metric.entity.js";
 
 // Create __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
