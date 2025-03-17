@@ -59,6 +59,12 @@ Additionally, to build the application for production, use:
    # or
    yarn run build
    ```
+
+Run with Docker
+   ```
+   docker-compose up --build
+   ```
+
 ### Logging
 The system logs various operational data which can be helpful for monitoring and troubleshooting. All logs are stored in the `logs` folder within the project directory.
 

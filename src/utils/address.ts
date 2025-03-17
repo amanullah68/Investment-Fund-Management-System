@@ -6,7 +6,3 @@ export const sanitizeAddress = (address: string): string => {
   }
   return ethers.getAddress(address);
 };
-
-export const validateAddress = (address: unknown): address is `0x${string}` => {
-  return typeof address === "string" && ethers.isAddress(address);
-};

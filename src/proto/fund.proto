@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package fund;
+
+// Define the Fund service with RPC methods.
+service FundService {
+  rpc Invest(InvestmentRequest) returns (InvestmentResponse);
+  rpc Redeem(RedemptionRequest) returns (RedemptionResponse);
+  rpc GetBalance(BalanceRequest) returns (BalanceResponse);
+  rpc GetMetrics(MetricsRequest) returns (MetricsResponse);
+  rpc HealthCheck(HealthRequest) returns (HealthResponse);
+}
+
+// Request/Response messages for investment.
+message InvestmentRequest {
+  string investor = 1;
+  double usdAmount = 2;
+}
+
+message InvestmentResponse {
+  string status = 1;
+  string txHash = 2;
+}
+
+// Request/Response messages for redemption.
+message RedemptionRequest {
+  string investor = 1;
+  string shares = 2; // Using string to represent BigInt
+}
+
+message RedemptionResponse {
+  string status = 1;
+  string txHash = 2;
+}
+
+// Request/Response messages for balance.
+message BalanceRequest {
+  string address = 1;
+}
+
+message BalanceResponse {
+  string balance = 1;
+}
+
+// Request/Response messages for fund metrics.
+message MetricsRequest {
+  bool refresh = 1;
+}
+
+message MetricsResponse {
+  string totalAssetValue = 1;
+  string sharesSupply = 2;
+  string lastUpdateTime = 3;
+  string cacheStatus = 4;
+}
+
+// Request/Response messages for health check.
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;
+  string message = 2;
+}

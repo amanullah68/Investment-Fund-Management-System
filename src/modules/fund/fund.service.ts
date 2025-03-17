@@ -1,5 +1,5 @@
 import { BlockchainService } from "../../services/blockchain/blockchain.service.js";
-import { sanitizeAddress, validateAddress } from "../../utils/address.js";
+import { sanitizeAddress } from "../../utils/address.js";
 import { env } from "../../config/config.js";
 import { redis } from "../../infra/redis.service.js";
 import { FundMetrics } from "../../types/fund.type.js";

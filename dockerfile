@@ -25,4 +25,4 @@ COPY --from=builder /app/dist ./dist
 EXPOSE 3000
 
 # Command to run the built app
-CMD ["node", "dist/app.js"]
+CMD ["node", "dist/grpc.server.js"]
