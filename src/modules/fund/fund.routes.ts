@@ -29,4 +29,6 @@ router.get("/balance/:address", [
 
 router.get("/fundMetrics", asyncHandler(controller.getMetrics));
 
+router.get("/transactions", asyncHandler(controller.getRecentTransactions));
+
 export const fundRouter = router;
