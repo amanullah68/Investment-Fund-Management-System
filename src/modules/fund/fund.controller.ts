@@ -4,9 +4,11 @@ import { sanitizeAddress } from "../../utils/address.js";
 import { Logger } from "../../utils/logger.js";
 import { HttpError } from "../../errors/http.error.js";
 import { handleResponse } from "../../utils/response.util.js";
+import { DatabaseService } from "../../services/database/database.service.js";
 
 export class FundController {
   private service = new FundService();
+  private dbService = new DatabaseService();
   private logger = new Logger("FundController");
 
   // Investment handler
@@ -144,4 +146,26 @@ export class FundController {
       );
     }
   };
+
+  // getRecentTransactions
+  getRecentTransactions = async (req: Request, res: Response) => {
+    try {
+      this.logger.info("Fetching recent transactions");
+      const getRecentTransactions = await this.dbService.getRecentTransactions();
+
+      this.logger.info("Recent transactions retrieved successfully");
+      handleResponse(this.logger, res, true, "Recent transactions retrieved", getRecentTransactions);
+    } catch (error) {
+      this.logger.error("Recent transactions fetch failed", error as Error);
+      const statusCode = error instanceof HttpError ? error.statusCode : 503;
+      handleResponse(
+        this.logger,
+        res,
+        false,
+        error instanceof Error ? error.message : "Recent transactions fetch failed",
+        null,
+        statusCode
+      );
+    }
+  }
 }

@@ -27,10 +27,16 @@ export class DatabaseService {
   }
 
   async getRecentTransactions(limit = 100) {
-    return this.transactionRepository.find({
+    const transactions = await this.transactionRepository.find({
       order: { transaction_timestamp: "DESC" },
       take: limit,
     });
+    return transactions.map((tx) => ({
+      ...tx,
+      created_at: tx.created_at?.toISOString(),
+      updated_at: tx.updated_at?.toISOString(),
+      transaction_timestamp: tx.transaction_timestamp?.toISOString(),
+    }));
   }
 
   async getHistoricalMetrics(days = 30) {
