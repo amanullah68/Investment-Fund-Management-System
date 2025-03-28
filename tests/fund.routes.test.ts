@@ -4,7 +4,6 @@ import { fundRouter } from "../src/modules/fund/fund.routes.js";
 import { FundService } from "../src/modules/fund/fund.service.js";
 import { HttpError } from "../src/errors/http.error.js";
 import { ethers } from "ethers";
-import { startGanache, stopGanache } from "./setupBlockchain";
 
 const TEST_ADDRESS = "0x1234567890123456789012345678901234567890";
 const TEST_ADDRESS_MIXED_CASE = ethers.getAddress(
@@ -56,21 +55,8 @@ jest.mock("../src/services/blockchain/blockchain.service.js", () => ({
 }));
 
 describe("Fund Endpoints", () => {
-  let fundService: FundService;
-
-  beforeAll(async () => {
-    await startGanache();
-    fundService = new FundService();
-  });
 
   afterAll(async () => {
-    await stopGanache();
-    const { BlockchainService } = await import(
-      "../src/services/blockchain/blockchain.service.js"
-    );
-    (BlockchainService as jest.Mock).mock.instances.forEach((instance: any) => {
-      if (instance.destroy) instance.destroy();
-    });
     await new Promise((resolve) => setTimeout(resolve, 500));
   });
 
@@ -195,20 +181,17 @@ describe("Fund Endpoints", () => {
     const mockMetrics = {
       totalAssetValue: 1000000,
       sharesSupply: 500000,
-      lastUpdateTime: new Date("2023-01-01T00:00:00.000Z"),
+      lastUpdateTime: new Date("2025-01-01T00:00:00.000Z"),
     };
 
     it("should return fresh metrics", async () => {
       jest
         .spyOn(FundService.prototype, "getFundMetrics")
         .mockResolvedValue(mockMetrics);
-      jest
-        .spyOn(FundService.prototype, "getCacheStatus")
-        .mockReturnValue("fresh");
+
       const res = await request(app).get("/fund/fundMetrics");
       const body = res.body as MetricsResponse;
       expect(res.statusCode).toBe(200);
-      expect(body.data.cacheStatus).toBe("fresh");
       expect(body.data.totalAssetValue).toBe(1000000);
     });
 

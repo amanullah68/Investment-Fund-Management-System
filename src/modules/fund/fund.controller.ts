@@ -127,13 +127,9 @@ export class FundController {
 
       this.logger.info("Metrics retrieved successfully", {
         refresh,
-        cacheStatus: this.service.getCacheStatus(),
       });
 
-      handleResponse(this.logger, res, true, "Metrics retrieved", {
-        ...metrics,
-        cacheStatus: this.service.getCacheStatus(),
-      });
+      handleResponse(this.logger, res, true, "Metrics retrieved", metrics);
     } catch (error) {
       this.logger.error("Metrics fetch failed", error as Error, { refresh });
 

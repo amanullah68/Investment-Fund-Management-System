@@ -8,7 +8,7 @@
     "dev": "nodemon --exec 'node --loader ts-node/esm -r dotenv/config src/app.ts'",
     "start": "node --loader ts-node/esm -r dotenv/config src/app.ts",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest --silent"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,8 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/mocha": "^10.0.10",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.13.8",
     "@types/supertest": "^6.0.2",
